@@ -1,16 +1,28 @@
-# books
+# 📚 VibeBook
 
-A new Flutter project.
+VibeBook is a modern Flutter book browsing application that allows users to explore books, search for titles, preview book details, and save their favorites with a clean and premium dark UI experience.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## ✨ Features
 
-A few resources to get you started if this is your first Flutter project:
+- 🔍 Search books easily
+- 📚 Browse best seller books
+- 📖 Book preview screen
+- ⭐ Ratings display
+- 👤 Profile screen
+- 🌙 Modern Dark Mode UI
+- 📱 Clean and responsive mobile layout
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🧱 Built With
+
+- Flutter
+- Dart
+- Clean UI Design
+- Material Design
+- Bloc Pattern
+- MVVM Architecture
+
+
