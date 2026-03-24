@@ -1,9 +1,13 @@
+import 'package:books/core/services/shared_preference_services.dart';
 import 'package:books/core/utils/app_colors.dart';
 import 'package:books/features/splash/presentation/views/splash_view.dart';
 import 'package:flutter/material.dart';
 
 void main(){
+  WidgetsFlutterBinding.ensureInitialized();
+  Prefs.init();
   runApp(const VibeBook());
+
 }
 
 

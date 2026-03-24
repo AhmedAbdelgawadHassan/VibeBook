@@ -1,0 +1,1 @@
+ const String kOnboardingSeen = 'onboarding_seen';

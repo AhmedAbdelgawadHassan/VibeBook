@@ -1,5 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:books/constants.dart';
+import 'package:books/core/services/shared_preference_services.dart';
 import 'package:books/core/utils/app_assets.dart';
 import 'package:books/features/home/presentation/views/home_view.dart';
+import 'package:books/features/splash/presentation/views/onboarding1_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
@@ -12,11 +17,20 @@ class SplashViewBody extends StatefulWidget {
 }
 
 class _SplashViewBodyState extends State<SplashViewBody> {
-@override
-  void initState() {
+  @override
+  void initState()  {
+   
     super.initState();
-    Future.delayed(Duration(seconds: 3),(){
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => HomeView(),));
+    Future.delayed(Duration(seconds: 3), ()async {
+       bool isSeen = await Prefs.getBool(kOnboardingSeen) ?? false;;
+      isSeen
+          ? Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => HomeView()),
+            )
+          : Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => Onboarding1View1()),
+            );
+      ;
     });
   }
 
@@ -25,8 +39,8 @@ class _SplashViewBodyState extends State<SplashViewBody> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SvgPicture.asset(Assets.images.splashLogo),
-        SvgPicture.asset(Assets.images.appNameLogo),
+        Image.asset(AppAssets.splashLogo),
+        SvgPicture.asset(AppAssets.appNameLogo),
         Gap(12),
         Text(
           'Curated Stories. Timeless Vibes.',
