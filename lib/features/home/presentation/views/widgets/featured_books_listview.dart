@@ -1,9 +1,11 @@
+import 'package:books/core/widgets/book_item_shimmer.dart';
 import 'package:books/core/widgets/custom_error_message.dart';
 import 'package:books/features/home/presentation/manager/cubits/featured_books_cubit/featured_books_cubit.dart';
 import 'package:books/features/home/presentation/manager/cubits/featured_books_cubit/featured_books_states.dart';
 import 'package:books/features/home/presentation/views/widgets/custom_book_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 
 class FeaturedBooksListview extends StatelessWidget {
   const FeaturedBooksListview({super.key});
@@ -13,7 +15,12 @@ class FeaturedBooksListview extends StatelessWidget {
     return BlocBuilder<FeaturedBooksCubit, FeaturedBooksState>(
       builder: (context, state) {
        if(state is FeaturedBooksLoadingState){
-        return const Center(child: CircularProgressIndicator());
+        return  ListView.builder(
+        itemCount: 6,
+        itemBuilder: (context, index) {
+          return const BookItemShimmer();
+        },
+      );;
        }
        else if (state is FeaturedBooksSuccessState){
         return ListView.builder(

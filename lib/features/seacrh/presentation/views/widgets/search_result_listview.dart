@@ -1,4 +1,4 @@
-import 'package:books/features/home/presentation/views/widgets/bestSeller_listview_item.dart';
+import 'package:books/features/home/presentation/views/widgets/newestBooks_listView.dart';
 import 'package:flutter/material.dart';
 
 class SearchResultListview extends StatelessWidget {
@@ -11,7 +11,7 @@ class SearchResultListview extends StatelessWidget {
               itemBuilder:  (context, index) {
                return  Padding(
                 padding: EdgeInsetsGeometry.only(bottom: 20),
-                child: BestsellerListviewItem());
+                child: NewestbooksListview());
              },);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:books/core/utils/app_colors.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CustomBookImage extends StatelessWidget {
@@ -7,7 +8,7 @@ class CustomBookImage extends StatelessWidget {
   });
 
 
-  static const double _radius = 20;
+  static const double _radius = 16;
   final String bookImage;
 
   @override
@@ -19,42 +20,20 @@ class CustomBookImage extends StatelessWidget {
         child: DecoratedBox(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(_radius),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.45),
-                blurRadius: 20,
-                offset: const Offset(0, 10),
-              ),
-              BoxShadow(
-                color: AppColors.secondaryColor.withValues(alpha: 0.22),
-                blurRadius: 28,
-                offset: const Offset(0, 6),
-                spreadRadius: -4,
-              ),
-            ],
+         
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(_radius),
             child: Stack(
               fit: StackFit.expand,
               children: [
-                Image.network(
-                  bookImage,
-                  fit: BoxFit.cover,
+               CachedNetworkImage(  // <-- CachedNetworkImage package used to Cache the image in the memory and handle the loading and error states
+                imageUrl: bookImage,
+                errorWidget: (context, url, error) => const Icon(Icons.error),/// <-- If the image fails to load or url has Problem , an error icon will be displayed
+                placeholder: (context, url) => Center(child: const CircularProgressIndicator()),/// <-- If the image is loading , a circular progress indicator will be displayed
+                fit: BoxFit.cover,
                 ),
-                DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      stops: const [0.35, 1],
-                      colors: [
-                        Colors.transparent,
-                        Colors.black.withValues(alpha: 0.55),
-                      ],
-                    ),
-                  ),
-                ),
+               
                 DecoratedBox(
                   decoration: BoxDecoration(
                     border: Border.all(

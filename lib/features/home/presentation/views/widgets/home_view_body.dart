@@ -1,5 +1,5 @@
 import 'package:books/core/utils/app_colors.dart';
-import 'package:books/features/home/presentation/views/widgets/bestSeller_listView.dart';
+import 'package:books/features/home/presentation/views/widgets/newestBooks_listView.dart';
 import 'package:books/features/home/presentation/views/widgets/featured_books_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -28,6 +28,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   Widget build(BuildContext context) {
     return SafeArea(
       child:CustomScrollView(
+        physics: const BouncingScrollPhysics(),
         slivers: [
           SliverToBoxAdapter(
             child: Padding(
@@ -65,7 +66,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             Gap(20),
              Row(
               children: [
-                Text('Best Sellers',style: TextStyle(fontSize: 24,fontFamily: 'NotoSerif',fontWeight: FontWeight.w800,color: Colors.white),),
+                Text('Newest Books',style: TextStyle(fontSize: 24,fontFamily: 'NotoSerif',fontWeight: FontWeight.w800,color: Colors.white),),
                 Spacer(),
                 TextButton(
                   onPressed: () {},
@@ -81,7 +82,8 @@ class _HomeViewBodyState extends State<HomeViewBody> {
           SliverFillRemaining(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: BestsellerListview())
+              child: NewestbooksListview(),
+              )
           )
         ],
     ));

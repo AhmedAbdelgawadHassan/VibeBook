@@ -13,17 +13,19 @@ class HomeRepoImpl implements HomeRepo{
   @override
   Future<Either<Failures, List<BookModel>>> fetchNewestBooks() async {
     try {
-  var data = await apiServices.get('volumes?q=subject:programming&Sorting=newest&Filtering=free_ebooks');
+  var data = await apiServices.get('volumes?q=subject:computer science&Filtering=free_ebooks');
    List<BookModel> books=[];
   for(var item in data["items"]){
     books.add(BookModel.fromJson(item));
   }
   return right(books);
+  
 } on Exception catch (e) {
   if(e is DioException){
     return left(ServerFailure.fromDioException(e));
   }
   return left(ServerFailure(errorMessage: e.toString()));
+  
 }
 
   }
@@ -36,6 +38,7 @@ class HomeRepoImpl implements HomeRepo{
   for(var item in data["items"]){
     books.add(BookModel.fromJson(item));
   }
+  // print("no of books ${books.length}");
   return right(books);
 } on Exception catch (e) {
   if(e is DioException){

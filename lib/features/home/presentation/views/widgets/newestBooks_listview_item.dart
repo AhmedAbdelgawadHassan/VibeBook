@@ -1,11 +1,16 @@
 import 'package:books/core/utils/app_colors.dart';
+import 'package:books/features/home/data/models/book_model/book_model.dart';
 import 'package:books/features/home/presentation/views/book_datails_view.dart';
 import 'package:books/features/home/presentation/views/widgets/book_rating.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-class BestsellerListviewItem extends StatelessWidget {
-  const BestsellerListviewItem({super.key});
+class NewestbooksListviewItem extends StatelessWidget {
+  const NewestbooksListviewItem({super.key, required this.bookModel,});
+  final BookModel bookModel;
+ 
+
 
   static const double _cardRadius = 8;
   static const double _coverRadius = 14;
@@ -67,20 +72,21 @@ class BestsellerListviewItem extends StatelessWidget {
                               ),
                             ],
                           ),
-                          child: Image.asset(
-                            'assets/images/testBookImage.png',
-                            fit: BoxFit.cover,
+                          child: CachedNetworkImage(
+                            placeholder: (context, url) => Center(child: const CircularProgressIndicator()),
+                            errorWidget: (context, url, error) => const Icon(Icons.error),
+                            imageUrl:bookModel.volumeInfo.imageLinks.thumbnail ,fit: BoxFit.fill,),
                           ),
                         ),
                       ),
-                    ),
+                    
                     const Gap(20),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'The Midnight Libraryr',
+                            bookModel.volumeInfo.title!,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -93,7 +99,7 @@ class BestsellerListviewItem extends StatelessWidget {
                           ),
                           const Gap(6),
                           Text(
-                            'Matt Haig',
+                            bookModel.volumeInfo.authors!.join(', '),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -105,7 +111,7 @@ class BestsellerListviewItem extends StatelessWidget {
                           ),
                           const Gap(10),
                           Text(
-                            r'$20.18',
+                            'Free Book',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -118,10 +124,12 @@ class BestsellerListviewItem extends StatelessWidget {
                           Gap(12),
                           Row(
                             children: [
-                             BookRating(),
+                             BookRating(
+                              rating: bookModel.volumeInfo.averageRating.toString(),
+                             ),
                               Spacer(),
                               Text(
-                                '45.2k Readers',
+                                bookModel.volumeInfo.ratingsCount.toString(),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -144,7 +152,7 @@ class BestsellerListviewItem extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
+      
+    ));
   }
 }

@@ -14,7 +14,9 @@ class ServerFailure extends Failures {
       case DioExceptionType.badCertificate:
       case DioExceptionType.badResponse:
         return ServerFailure.fromResponse(
-            int.parse(error.response!.statusMessage!), error.response!.data);
+          error.response!.statusCode!,
+          error.response!.data,
+        );
       case DioExceptionType.receiveTimeout:
         errorMessage = 'server error';
         break;
@@ -28,7 +30,9 @@ class ServerFailure extends Failures {
         errorMessage = 'unKnown error';
         break;
       default:
-        return ServerFailure(errorMessage: 'There was an error , Please try again');
+        return ServerFailure(
+          errorMessage: 'There was an error , Please try again',
+        );
     }
     return ServerFailure(errorMessage: errorMessage);
   }
@@ -41,7 +45,9 @@ class ServerFailure extends Failures {
     } else if (statescCode == 500) {
       return ServerFailure(errorMessage: 'Server error');
     } else {
-      return ServerFailure(errorMessage: 'There was an error , Please try again');
+      return ServerFailure(
+        errorMessage: 'There was an error , Please try again',
+      );
     }
   }
 }

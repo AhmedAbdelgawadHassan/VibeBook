@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 class BookRating extends StatelessWidget {
-  const BookRating({super.key});
+  const BookRating({super.key, required this.rating});
+  final String rating;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class BookRating extends StatelessWidget {
                                   ),
                                   const Gap(4),
                                   Text(
-                                    '4.5',
+                                    rating,
                                     style: TextStyle(
                                       fontSize: 13,
                                       fontFamily: 'manrope',

@@ -38,7 +38,7 @@ class VibeBook extends StatelessWidget {
           create: (context) => NewestBooksCubit(
             NewestBooksInitialState(),
             homeRepo: getIt.get<HomeRepoImpl>(),
-          ),
+          )..fetchNewestBooks(),
         ),
       ],
       child: MaterialApp(

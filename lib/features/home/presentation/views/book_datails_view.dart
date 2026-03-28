@@ -16,7 +16,9 @@ class BookDatailsView extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.transparent,
-        leading: Icon(Icons.menu,color: AppColors.secondaryColor,),
+        leading: InkWell(
+          onTap: (){Navigator.pop(context);},
+          child: Icon(Icons.arrow_back,color: Colors.white,)),
         title: Text('VibeBook',style: TextStyle(fontSize: 20,fontFamily: 'manrope',fontWeight: FontWeight.w800,color: AppColors.secondaryColor),),
         actions: [
           Icon(FontAwesomeIcons.solidCircleUser.data,color: AppColors.secondaryColor,),
