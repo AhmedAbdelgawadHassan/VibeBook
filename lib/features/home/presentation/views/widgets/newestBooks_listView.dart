@@ -15,21 +15,22 @@ class NewestbooksListview extends StatelessWidget {
       builder: (context, state) {
         if (state is NewestBooksLoadingState) {
           return ListView.builder(
-        itemCount: 6,
-        itemBuilder: (context, index) {
-          return const BookItemShimmer();
-        },
-      );
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: 6,
+            itemBuilder: (context, index) {
+              return const BookItemShimmer();
+            },
+          );
         } else if (state is NewestBooksSuccessState) {
           return ListView.builder(
             physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
             itemCount: state.book.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding: EdgeInsetsGeometry.only(bottom: 20),
+                padding: const EdgeInsets.only(bottom: 18),
                 child: NewestbooksListviewItem(bookModel: state.book[index]),
-                
-                
               );
             },
           );

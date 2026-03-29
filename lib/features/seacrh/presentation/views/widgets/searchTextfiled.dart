@@ -3,7 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Searchtextfiled extends StatelessWidget {
-  const Searchtextfiled({super.key});
+  const Searchtextfiled({
+    super.key,
+    required this.onSearch,
+    required this.controller,
+  });
+
+  final ValueChanged<String> onSearch;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +36,7 @@ class Searchtextfiled extends StatelessWidget {
         ],
       ),
       child: TextField(
+        controller: controller,
         style: const TextStyle(
           color: Colors.white,
           fontSize: 15,
@@ -36,6 +44,8 @@ class Searchtextfiled extends StatelessWidget {
           letterSpacing: 0.2,
         ),
         cursorColor: AppColors.secondaryColor,
+        textInputAction: TextInputAction.search,
+        onSubmitted: onSearch,
         decoration: InputDecoration(
           hintText: 'Search books, authors, genres...',
           hintStyle: const TextStyle(
@@ -63,9 +73,9 @@ class Searchtextfiled extends StatelessWidget {
                 border: Border.all(color: const Color(0xff3C4A63), width: 1),
               ),
               child: IconButton(
-                onPressed: () {},
+                onPressed: () => onSearch(controller.text),
                 icon: const Icon(
-                  Icons.tune_rounded,
+                  Icons.search_rounded,
                   color: AppColors.secondaryColor,
                   size: 20,
                 ),
@@ -80,10 +90,7 @@ class Searchtextfiled extends StatelessWidget {
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
-            borderSide: const BorderSide(
-              color: Color(0xff3B465A),
-              width: 1.2,
-            ),
+            borderSide: const BorderSide(color: Color(0xff3B465A), width: 1.2),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),

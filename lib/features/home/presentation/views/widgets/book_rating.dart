@@ -32,16 +32,14 @@ class BookRating extends StatelessWidget {
                                     size: 17,
                                     color: Colors.amber.shade400,
                                   ),
-                                  const Gap(4),
+                                  const Gap(20),
                                   Text(
                                     rating,
                                     style: TextStyle(
                                       fontSize: 13,
-                                      fontFamily: 'manrope',
+                                      fontFamily: 'NotoSerif',
                                       fontWeight: FontWeight.w700,
-                                      color: Colors.white.withValues(
-                                        alpha: 0.9,
-                                      ),
+                                      color: Colors.white
                                     ),
                                   ),
                                 ],

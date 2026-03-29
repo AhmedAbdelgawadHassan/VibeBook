@@ -40,7 +40,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                    Text(
                 getGreeting(),
                 style: const TextStyle(
-                  fontSize: 36,
+                  fontSize: 30,
                   fontFamily: 'NotoSerif',
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -50,7 +50,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
               const Text(
                 'Find your next great adventure today.',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   fontFamily: 'manrope',
                   fontWeight: FontWeight.w400,
                   color: Color(0xff9CA3AF),
@@ -59,7 +59,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
               const Gap(18),
             Gap(20),
             SizedBox(
-              height: MediaQuery.of(context).size.height*0.22,
+              height: MediaQuery.of(context).size.height*0.2,
               width: double.infinity,
               child:FeaturedBooksListview(
               )
@@ -68,25 +68,26 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             Gap(20),
              Row(
               children: [
-                Text('Newest Books',style: TextStyle(fontSize: 24,fontFamily: 'NotoSerif',fontWeight: FontWeight.w800,color: Colors.white),),
+                Text('Newest Books',style: TextStyle(fontSize: 20,fontFamily: 'NotoSerif',fontWeight: FontWeight.w800,color: Colors.white),),
                 Spacer(),
                 TextButton(
                   onPressed: () {},
-                  child: Text('View All',style: TextStyle(fontSize:14,fontFamily: 'NotoSerif',fontWeight: FontWeight.w800,color: AppColors.secondaryColor),)),
+                  child: Text('View All',style: TextStyle(fontSize:12,fontFamily: 'NotoSerif',fontWeight: FontWeight.w800,color: AppColors.secondaryColor),)),
               ],
             ),
             Gap(20),
+           
                 ],
               ),
             )
             ,
           ),
-          SliverFillRemaining(
-            child: Padding(
+          SliverToBoxAdapter(
+            child:  Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: NewestbooksListview(),
-              )
+              child: NewestbooksListview(),) ,
           )
+         
         ],
     ));
   }

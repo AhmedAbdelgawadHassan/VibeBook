@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class BookDatailsView extends StatefulWidget {
   const BookDatailsView({super.key, required this.bookModel});
@@ -48,19 +47,13 @@ class _BookDatailsViewState extends State<BookDatailsView> {
         title: Text(
           'VibeBook',
           style: TextStyle(
-            fontSize: 20,
-            fontFamily: 'manrope',
+            fontSize: 22,
+            fontFamily: 'NotoSerif',
             fontWeight: FontWeight.w800,
-            color: AppColors.secondaryColor,
+            color: AppColors.secondaryColor
           ),
         ),
-        actions: [
-          Icon(
-            FontAwesomeIcons.solidCircleUser.data,
-            color: AppColors.secondaryColor,
-          ),
-          Gap(12),
-        ],
+       
       ),
       body: CustomScrollView(
         slivers: [
@@ -83,7 +76,7 @@ class _BookDatailsViewState extends State<BookDatailsView> {
                     widget.bookModel.volumeInfo.title!,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 32,
+                      fontSize: 28,
                       fontFamily: 'NotoSerif',
                       fontWeight: FontWeight.bold,
                     ),
@@ -114,7 +107,7 @@ class _BookDatailsViewState extends State<BookDatailsView> {
                           BookDetailedCard(
                             title: 'Raters',
                             value:
-                                '${widget.bookModel.volumeInfo.ratingsCount.toString()}',
+                                widget.bookModel.volumeInfo.ratingsCount.toString(),
                             titleColor: Colors.green,
                           ),
                         ],
@@ -125,14 +118,14 @@ class _BookDatailsViewState extends State<BookDatailsView> {
                           BookDetailedCard(
                             title: 'Rating',
                             value:
-                                '⭐ ${widget.bookModel.volumeInfo.averageRating.toString()}',
+                                '⭐  ${widget.bookModel.volumeInfo.averageRating.toString()}',
                             titleColor: Colors.yellow,
                           ),
                           Gap(10),
                           BookDetailedCard(
                             title: 'pages',
                             value:
-                                '${widget.bookModel.volumeInfo.pageCount.toString()}',
+                                widget.bookModel.volumeInfo.pageCount.toString(),
                             titleColor: Colors.blue,
                           ),
                         ],
@@ -153,10 +146,9 @@ class _BookDatailsViewState extends State<BookDatailsView> {
                     ),
                   ),
                   const Gap(10),
-                  Text(
-                    widget.bookModel.volumeInfo.description!,
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(
+                  Text(widget.bookModel.volumeInfo.description??'No Description Available',
+                  textAlign: TextAlign.justify,
+                   style: TextStyle(
                       fontSize: 18,
                       wordSpacing: -3,
                       fontFamily: 'manrope',
