@@ -1,16 +1,19 @@
+import 'package:books/core/services/service_locator.dart';
 import 'package:books/core/utils/app_colors.dart';
 import 'package:books/features/home/data/models/book_model/book_model.dart';
+import 'package:books/features/home/data/repos/home_repo_impl.dart';
+import 'package:books/features/home/presentation/manager/cubits/similar_books_cubit/similar_books_cubit.dart';
+import 'package:books/features/home/presentation/manager/cubits/similar_books_cubit/similar_books_states.dart';
 import 'package:books/features/home/presentation/views/book_datails_view.dart';
 import 'package:books/features/home/presentation/views/widgets/book_rating.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
 class NewestbooksListviewItem extends StatelessWidget {
-  const NewestbooksListviewItem({super.key, required this.bookModel,});
+  const NewestbooksListviewItem({super.key, required this.bookModel});
   final BookModel bookModel;
- 
-
 
   static const double _cardRadius = 8;
   static const double _coverRadius = 14;
@@ -19,7 +22,17 @@ class NewestbooksListviewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => BookDatailsView(),));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BlocProvider(
+              create: (context) => SimilarBooksCubit(
+                SimilarBooksInitialState(),
+                homeRepo: getIt.get<HomeRepoImpl>(),
+              ),
+              child: BookDatailsView(bookModel: bookModel)),
+          ),
+        );
       },
       child: Material(
         color: Colors.transparent,
@@ -55,7 +68,7 @@ class NewestbooksListviewItem extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
-      
+
                   children: [
                     SizedBox(
                       height: 125,
@@ -73,13 +86,18 @@ class NewestbooksListviewItem extends StatelessWidget {
                             ],
                           ),
                           child: CachedNetworkImage(
-                            placeholder: (context, url) => Center(child: const CircularProgressIndicator()),
-                            errorWidget: (context, url, error) => const Icon(Icons.error),
-                            imageUrl:bookModel.volumeInfo.imageLinks.thumbnail ,fit: BoxFit.fill,),
+                            placeholder: (context, url) => Center(
+                              child: const CircularProgressIndicator(),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                            imageUrl: bookModel.volumeInfo.imageLinks.thumbnail,
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),
-                    
+                    ),
+
                     const Gap(20),
                     Expanded(
                       child: Column(
@@ -124,9 +142,10 @@ class NewestbooksListviewItem extends StatelessWidget {
                           Gap(12),
                           Row(
                             children: [
-                             BookRating(
-                              rating: bookModel.volumeInfo.averageRating.toString(),
-                             ),
+                              BookRating(
+                                rating: bookModel.volumeInfo.averageRating
+                                    .toString(),
+                              ),
                               Spacer(),
                               Text(
                                 bookModel.volumeInfo.ratingsCount.toString(),
@@ -139,8 +158,8 @@ class NewestbooksListviewItem extends StatelessWidget {
                                   color: const Color(0xff9CA3AF),
                                 ),
                               ),
-      
-                            Gap(10)
+
+                              Gap(10),
                             ],
                           ),
                         ],
@@ -152,7 +171,7 @@ class NewestbooksListviewItem extends StatelessWidget {
             ),
           ),
         ),
-      
-    ));
+      ),
+    );
   }
 }

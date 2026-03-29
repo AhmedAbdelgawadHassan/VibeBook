@@ -26,13 +26,17 @@ class VibeBook extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(   // Provider more than one Cubit
+    return MultiBlocProvider(
+      // Provider more than one Cubit
       providers: [
         BlocProvider(
           create: (context) => FeaturedBooksCubit(
             FeaturedBooksInitialState(), // initial state
-            homeRepo: getIt.get<HomeRepoImpl>(),  // homeRepo (Singleton pattern on the service locator)
-          )..featchFeaturedBooks(),  // Cascad OPerator to call the method after the cubit is created Directly
+            homeRepo: getIt
+                .get<
+                  HomeRepoImpl
+                >(), // homeRepo (Singleton pattern on the service locator)
+          )..featchFeaturedBooks(), // Cascad OPerator to call the method after the cubit is created Directly
         ),
         BlocProvider(
           create: (context) => NewestBooksCubit(

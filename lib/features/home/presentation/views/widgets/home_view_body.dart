@@ -6,6 +6,7 @@ import 'package:gap/gap.dart';
 
 class HomeViewBody extends StatefulWidget {
   const HomeViewBody({super.key});
+  
 
   @override
   State<HomeViewBody> createState() => _HomeViewBodyState();
@@ -60,7 +61,8 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             SizedBox(
               height: MediaQuery.of(context).size.height*0.22,
               width: double.infinity,
-              child:FeaturedBooksListview()
+              child:FeaturedBooksListview(
+              )
               
             ),
             Gap(20),

@@ -10,8 +10,6 @@ class FreereadindButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16),
-      width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 3),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),

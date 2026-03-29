@@ -1,14 +1,15 @@
 import 'package:books/core/widgets/book_item_shimmer.dart';
 import 'package:books/core/widgets/custom_error_message.dart';
+import 'package:books/features/home/data/models/book_model/book_model.dart';
 import 'package:books/features/home/presentation/manager/cubits/featured_books_cubit/featured_books_cubit.dart';
 import 'package:books/features/home/presentation/manager/cubits/featured_books_cubit/featured_books_states.dart';
+import 'package:books/features/home/presentation/views/book_datails_view.dart';
 import 'package:books/features/home/presentation/views/widgets/custom_book_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shimmer/shimmer.dart';
 
 class FeaturedBooksListview extends StatelessWidget {
-  const FeaturedBooksListview({super.key});
+  const FeaturedBooksListview({super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class FeaturedBooksListview extends StatelessWidget {
         itemBuilder: (context, index) {
           return const BookItemShimmer();
         },
-      );;
+      );
        }
        else if (state is FeaturedBooksSuccessState){
         return ListView.builder(
@@ -33,9 +34,11 @@ class FeaturedBooksListview extends StatelessWidget {
         itemBuilder: (context, index) {
           return Padding(
             padding: EdgeInsets.only(right: 12),
-            child: CustomBookImage(
-              bookImage: state.books[index].volumeInfo.imageLinks.thumbnail
-              // bookImage: state.books[index].items,
+            
+              child: CustomBookImage(
+                bookImage: state.books[index].volumeInfo.imageLinks.thumbnail
+                // bookImage: state.books[index].items,
+              
             ),
           );
         },
