@@ -1,3 +1,5 @@
+import 'package:books/core/functions/download_book.dart';
+import 'package:books/core/functions/launch_url.dart';
 import 'package:books/core/utils/app_colors.dart';
 import 'package:books/features/home/data/models/book_model/book_model.dart';
 import 'package:books/features/home/presentation/manager/cubits/similar_books_cubit/similar_books_cubit.dart';
@@ -11,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BookDatailsView extends StatefulWidget {
   const BookDatailsView({super.key, required this.bookModel});
@@ -88,6 +91,7 @@ class _BookDatailsViewState extends State<BookDatailsView> {
                   Gap(7),
                   Text(
                     'By ${widget.bookModel.volumeInfo.authors!.join(', ')}',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20,
                       fontFamily: 'manrope',
@@ -161,9 +165,7 @@ class _BookDatailsViewState extends State<BookDatailsView> {
                     ),
                   ),
                   Gap(30),
-                  BookDatailsInfo(
-                    bookModel: widget.bookModel,
-                  ),
+                  BookDatailsInfo(bookModel: widget.bookModel),
                   Gap(40),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -173,7 +175,13 @@ class _BookDatailsViewState extends State<BookDatailsView> {
                         children: [
                           Expanded(
                             child: FreereadindButton(
-                              onpressed: () {
+                              onpressed: () async {
+                                openUrl(
+                                  urlLink:
+                                      widget.bookModel.volumeInfo.infoLink!,
+                                  context: context,
+                                );
+
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text(
@@ -190,7 +198,18 @@ class _BookDatailsViewState extends State<BookDatailsView> {
                           ),
                           const Gap(10),
                           DownloadBookButton(
-                            onPressed: () {
+                            onPressed: () async {
+                              final link = widget.bookModel.volumeInfo.previewLink;
+                              if (link != null) {
+                                await downloadBook(link,widget.bookModel.volumeInfo.title!, );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('No download link available'),
+                                  ),
+                                );
+                              }
+
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text(

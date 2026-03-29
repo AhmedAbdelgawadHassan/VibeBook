@@ -13,7 +13,13 @@ class BookDetailsInfoItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(title,style: TextStyle(fontSize: 14,fontFamily: 'manrope',fontWeight: FontWeight.w500,color: Color(0xffA8A29E)),),
-          Text(value,style: TextStyle(fontSize: 14,fontFamily: 'manrope',fontWeight: FontWeight.w600,color: Colors.white),),
+           SizedBox(
+            width: MediaQuery.of(context).size.width*0.55,
+            child: Text(value,
+            maxLines: 1,
+            textAlign: TextAlign.end,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 14,fontFamily: 'manrope',fontWeight: FontWeight.w600,color: Colors.white),)),
           ],
         ),
         const Gap(5),

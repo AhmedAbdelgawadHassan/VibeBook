@@ -21,9 +21,9 @@ class BookDatailsInfo extends StatelessWidget {
         children: [
        Text('Book Details',style: TextStyle(fontSize: 20,fontFamily: 'NotoSerif',fontWeight: FontWeight.bold,color: Colors.white),),
       const Gap(10),
-       BookDetailsInfoItem(title: 'Published',value: bookModel.volumeInfo.publishedDate!),
-       BookDetailsInfoItem(title: 'Publisher', value: bookModel.volumeInfo.publisher!),
-       BookDetailsInfoItem(title: 'Language', value: bookModel.volumeInfo.language!),
+       BookDetailsInfoItem(title: 'Published',value: bookModel.volumeInfo.publishedDate??"Unknown"),
+       BookDetailsInfoItem(title: 'Publisher', value: bookModel.volumeInfo.publisher??'Unknown'),
+       BookDetailsInfoItem(title: 'Language', value: bookModel.volumeInfo.language??'Unknown'),
        BookDetailsInfoItem(title: 'Genre', value: bookModel.volumeInfo.categories!.join(', ')),
         ],
       ),

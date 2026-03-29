@@ -22,6 +22,7 @@ class NewestbooksListview extends StatelessWidget {
       );
         } else if (state is NewestBooksSuccessState) {
           return ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
             itemCount: state.book.length,
             itemBuilder: (context, index) {
               return Padding(

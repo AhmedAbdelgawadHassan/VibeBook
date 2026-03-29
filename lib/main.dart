@@ -1,4 +1,3 @@
-import 'package:books/core/services/api_services.dart';
 import 'package:books/core/services/service_locator.dart';
 import 'package:books/core/services/shared_preference_services.dart';
 import 'package:books/core/utils/app_colors.dart';
@@ -8,7 +7,6 @@ import 'package:books/features/home/presentation/manager/cubits/featured_books_c
 import 'package:books/features/home/presentation/manager/cubits/newest_books_cubit/newest_books_cubit.dart';
 import 'package:books/features/home/presentation/manager/cubits/newest_books_cubit/newest_books_states.dart';
 import 'package:books/features/splash/presentation/views/splash_view.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -38,6 +36,7 @@ class VibeBook extends StatelessWidget {
                 >(), // homeRepo (Singleton pattern on the service locator)
           )..featchFeaturedBooks(), // Cascad OPerator to call the method after the cubit is created Directly
         ),
+
         BlocProvider(
           create: (context) => NewestBooksCubit(
             NewestBooksInitialState(),
