@@ -12,13 +12,17 @@ class DownloadBookButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final borderColor = isDark
+        ? Colors.white.withOpacity(0.8)
+        : Colors.black.withOpacity(0.18);
+
     return SizedBox(
       width: 60,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 2),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(_outerRadius),
-       
         ),
         child: Material(
           color: Colors.transparent,
@@ -34,10 +38,7 @@ class DownloadBookButton extends StatelessWidget {
             child: Ink(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(_innerRadius),
-                border: Border.all(
-                  color: Colors.white.withOpacity(0.8),
-                  width: 1.5,
-                ),
+                border: Border.all(color: borderColor, width: 1.5),
               ),
               child: SizedBox.expand(
                 child: Center(

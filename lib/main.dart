@@ -1,5 +1,6 @@
 import 'package:books/core/services/service_locator.dart';
 import 'package:books/core/services/shared_preference_services.dart';
+import 'package:books/core/presentation/manager/cubits/theme_cubit/theme_cubit.dart';
 import 'package:books/core/utils/app_colors.dart';
 import 'package:books/features/home/data/repos/home_repo_impl.dart';
 import 'package:books/features/home/presentation/manager/cubits/featured_books_cubit/featured_books_cubit.dart';
@@ -27,6 +28,7 @@ class VibeBook extends StatelessWidget {
     return MultiBlocProvider(
       // Provider more than one Cubit
       providers: [
+        BlocProvider(create: (context) => ThemeCubit()),
         BlocProvider(
           create: (context) => FeaturedBooksCubit(
             FeaturedBooksInitialState(), // initial state
@@ -44,12 +46,32 @@ class VibeBook extends StatelessWidget {
           )..fetchNewestBooks(),
         ),
       ],
-      child: MaterialApp(
-        theme: ThemeData.dark().copyWith(
-          scaffoldBackgroundColor: AppColors.primaryColor,
-        ),
-        debugShowCheckedModeBanner: false,
-        home: SplashView(),
+      child: BlocBuilder<ThemeCubit, ThemeMode>(
+        builder: (context, themeMode) {
+          final darkTheme = ThemeData.dark().copyWith(
+            scaffoldBackgroundColor: AppColors.primaryColor,
+            appBarTheme: const AppBarTheme(
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.transparent,
+            ),
+          );
+
+          final lightTheme = ThemeData.light().copyWith(
+            scaffoldBackgroundColor: Colors.white,
+            appBarTheme: const AppBarTheme(
+              foregroundColor: Colors.black,
+              backgroundColor: Colors.transparent,
+            ),
+          );
+
+          return MaterialApp(
+            themeMode: themeMode,
+            theme: lightTheme,
+            darkTheme: darkTheme,
+            debugShowCheckedModeBanner: false,
+            home: SplashView(),
+          );
+        },
       ),
     );
   }

@@ -8,42 +8,34 @@ class BookRating extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 5,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.secondaryColor.withValues(
-                                  alpha: 0.14,
-                                ),
-                                borderRadius: BorderRadius.circular(999),
-                                border: Border.all(
-                                  color: AppColors.secondaryColor.withValues(
-                                    alpha: 0.22,
-                                  ),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(
-                                    Icons.star_rounded,
-                                    size: 17,
-                                    color: Colors.amber.shade400,
-                                  ),
-                                  const Gap(20),
-                                  Text(
-                                    rating,
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      fontFamily: 'NotoSerif',
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.white
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : Colors.black;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+        color: AppColors.secondaryColor.withValues(alpha: 0.14),
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(
+          color: AppColors.secondaryColor.withValues(alpha: 0.22),
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.star_rounded, size: 17, color: Colors.amber.shade400),
+          const Gap(12),
+          Text(
+            rating,
+            style: TextStyle(
+              fontSize: 13,
+              fontFamily: 'NotoSerif',
+              fontWeight: FontWeight.w700,
+              color: textColor,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

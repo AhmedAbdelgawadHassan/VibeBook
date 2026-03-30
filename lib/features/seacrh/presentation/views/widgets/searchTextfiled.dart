@@ -14,11 +14,28 @@ class Searchtextfiled extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final gradientColors = isDark
+        ? const [Color(0xff2A3140), Color(0xff1B2230)]
+        : const [Color(0xffF3F4F6), Color(0xffE5E7EB)];
+    final textColor = isDark ? Colors.white : Colors.black;
+    final hintColor = isDark ? const Color(0xffA6AFBF) : Colors.black54;
+    final borderColor = isDark
+        ? const Color(0xff3B465A)
+        : const Color(0xffCBD5E1);
+    final focusedBorderColor = isDark
+        ? AppColors.secondaryColor
+        : const Color(0xff6366F1);
+    final suffixBg = isDark ? const Color(0xff2B3447) : Colors.white;
+    final suffixBorder = isDark
+        ? const Color(0xff3C4A63)
+        : const Color(0xffE5E7EB);
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        gradient: const LinearGradient(
-          colors: [Color(0xff2A3140), Color(0xff1B2230)],
+        gradient: LinearGradient(
+          colors: gradientColors,
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -37,8 +54,8 @@ class Searchtextfiled extends StatelessWidget {
       ),
       child: TextField(
         controller: controller,
-        style: const TextStyle(
-          color: Colors.white,
+        style: TextStyle(
+          color: textColor,
           fontSize: 15,
           fontWeight: FontWeight.w600,
           letterSpacing: 0.2,
@@ -48,8 +65,8 @@ class Searchtextfiled extends StatelessWidget {
         onSubmitted: onSearch,
         decoration: InputDecoration(
           hintText: 'Search books, authors, genres...',
-          hintStyle: const TextStyle(
-            color: Color(0xffA6AFBF),
+          hintStyle: TextStyle(
+            color: hintColor,
             fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
@@ -68,9 +85,9 @@ class Searchtextfiled extends StatelessWidget {
               width: 38,
               height: 38,
               decoration: BoxDecoration(
-                color: const Color(0xff2B3447),
+                color: suffixBg,
                 borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: const Color(0xff3C4A63), width: 1),
+                border: Border.all(color: suffixBorder, width: 1),
               ),
               child: IconButton(
                 onPressed: () => onSearch(controller.text),
@@ -90,14 +107,11 @@ class Searchtextfiled extends StatelessWidget {
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
-            borderSide: const BorderSide(color: Color(0xff3B465A), width: 1.2),
+            borderSide: BorderSide(color: borderColor, width: 1.2),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
-            borderSide: const BorderSide(
-              color: AppColors.secondaryColor,
-              width: 1.8,
-            ),
+            borderSide: BorderSide(color: focusedBorderColor, width: 1.8),
           ),
         ),
       ),

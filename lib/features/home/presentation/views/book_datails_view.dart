@@ -11,7 +11,6 @@ import 'package:books/features/home/presentation/views/widgets/freeReadind_butto
 import 'package:books/features/home/presentation/views/widgets/similarBooks_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 
 class BookDatailsView extends StatefulWidget {
@@ -25,15 +24,29 @@ class BookDatailsView extends StatefulWidget {
 class _BookDatailsViewState extends State<BookDatailsView> {
   @override
   void initState() {
+    final categories = widget.bookModel.volumeInfo.categories;
+    final category = (categories != null && categories.isNotEmpty)
+        ? categories.first
+        : 'programming';
     BlocProvider.of<SimilarBooksCubit>(
       context,
-    ).fetchSimilarBooks(category: widget.bookModel.volumeInfo.categories![0]);
+    ).fetchSimilarBooks(category: category);
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final titleColor = isDark ? Colors.white : Colors.black;
+    final subtitleTextColor = isDark ? const Color(0xffD6D3D1) : Colors.black54;
+
+    final title = widget.bookModel.volumeInfo.title ?? 'Unknown title';
+    final authors = widget.bookModel.volumeInfo.authors;
+    final authorText = (authors == null || authors.isEmpty)
+        ? 'Unknown author'
+        : authors.join(', ');
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -42,7 +55,7 @@ class _BookDatailsViewState extends State<BookDatailsView> {
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(Icons.arrow_back, color: Colors.white),
+          child: Icon(Icons.arrow_back, color: titleColor),
         ),
         title: Text(
           'VibeBook',
@@ -50,10 +63,9 @@ class _BookDatailsViewState extends State<BookDatailsView> {
             fontSize: 22,
             fontFamily: 'NotoSerif',
             fontWeight: FontWeight.w800,
-            color: AppColors.secondaryColor
+            color: AppColors.secondaryColor,
           ),
         ),
-       
       ),
       body: CustomScrollView(
         slivers: [
@@ -73,7 +85,7 @@ class _BookDatailsViewState extends State<BookDatailsView> {
                   ),
                   Gap(15),
                   Text(
-                    widget.bookModel.volumeInfo.title!,
+                    title,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 28,
@@ -83,7 +95,7 @@ class _BookDatailsViewState extends State<BookDatailsView> {
                   ),
                   Gap(7),
                   Text(
-                    'By ${widget.bookModel.volumeInfo.authors!.join(', ')}',
+                    'By $authorText',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20,
@@ -106,8 +118,8 @@ class _BookDatailsViewState extends State<BookDatailsView> {
                           Gap(10),
                           BookDetailedCard(
                             title: 'Raters',
-                            value:
-                                widget.bookModel.volumeInfo.ratingsCount.toString(),
+                            value: widget.bookModel.volumeInfo.ratingsCount
+                                .toString(),
                             titleColor: Colors.green,
                           ),
                         ],
@@ -124,8 +136,8 @@ class _BookDatailsViewState extends State<BookDatailsView> {
                           Gap(10),
                           BookDetailedCard(
                             title: 'pages',
-                            value:
-                                widget.bookModel.volumeInfo.pageCount.toString(),
+                            value: widget.bookModel.volumeInfo.pageCount
+                                .toString(),
                             titleColor: Colors.blue,
                           ),
                         ],
@@ -141,19 +153,21 @@ class _BookDatailsViewState extends State<BookDatailsView> {
                         fontSize: 24,
                         fontFamily: 'NotoSerif',
                         fontWeight: FontWeight.w800,
-                        color: Colors.white,
+                        color: titleColor,
                       ),
                     ),
                   ),
                   const Gap(10),
-                  Text(widget.bookModel.volumeInfo.description??'No Description Available',
-                  textAlign: TextAlign.justify,
-                   style: TextStyle(
+                  Text(
+                    widget.bookModel.volumeInfo.description ??
+                        'No Description Available',
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
                       fontSize: 18,
                       wordSpacing: -3,
                       fontFamily: 'manrope',
                       fontWeight: FontWeight.w400,
-                      color: Color(0xffD6D3D1),
+                      color: subtitleTextColor,
                     ),
                   ),
                   Gap(30),
@@ -168,11 +182,24 @@ class _BookDatailsViewState extends State<BookDatailsView> {
                           Expanded(
                             child: FreereadindButton(
                               onpressed: () async {
-                                openUrl(
-                                  urlLink:
-                                      widget.bookModel.volumeInfo.infoLink!,
-                                  context: context,
-                                );
+                                final infoLink =
+                                    widget.bookModel.volumeInfo.infoLink;
+                                if (infoLink == null) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        'Preview link is not available',
+                                        style: TextStyle(
+                                          fontFamily: 'NotoSerif',
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                  return;
+                                }
+
+                                openUrl(urlLink: infoLink, context: context);
 
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
@@ -191,9 +218,10 @@ class _BookDatailsViewState extends State<BookDatailsView> {
                           const Gap(10),
                           DownloadBookButton(
                             onPressed: () async {
-                              final link = widget.bookModel.volumeInfo.previewLink;
+                              final link =
+                                  widget.bookModel.volumeInfo.previewLink;
                               if (link != null) {
-                                await downloadBook(link,widget.bookModel.volumeInfo.title!, );
+                                await downloadBook(link, title);
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
@@ -228,7 +256,7 @@ class _BookDatailsViewState extends State<BookDatailsView> {
                         fontSize: 20,
                         fontFamily: 'NotoSerif',
                         fontWeight: FontWeight.w800,
-                        color: Colors.white,
+                        color: titleColor,
                       ),
                     ),
                   ),

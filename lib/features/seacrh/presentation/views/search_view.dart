@@ -1,4 +1,5 @@
 import 'package:books/core/services/service_locator.dart';
+import 'package:books/core/presentation/manager/cubits/theme_cubit/theme_cubit.dart';
 import 'package:books/features/home/data/repos/home_repo_impl.dart';
 import 'package:books/features/seacrh/presentation/manager/cubits/search_books_cubit/search_books_cubit.dart';
 import 'package:books/features/seacrh/presentation/manager/cubits/search_books_cubit/search_books_states.dart';
@@ -38,60 +39,80 @@ class _SearchViewState extends State<SearchView> {
         homeRepo: getIt.get<HomeRepoImpl>(),
       ),
       child: Builder(
-        builder: (context) {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              title: const Text(
-                'Search',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 28,
-                  fontFamily: 'NotoSerif',
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-            body: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
+        builder: (context) => Scaffold(
+          body: BlocBuilder<ThemeCubit, ThemeMode>(
+            builder: (context, themeMode) {
+              final isDark = themeMode == ThemeMode.dark;
+              final textColor = isDark ? Colors.white : Colors.black;
+              final subtitleColor = isDark
+                  ? const Color(0xff9CA3AF)
+                  : Colors.black54;
+
+              return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Find your next favorite book',
-                    style: TextStyle(
-                      color: Color(0xff9CA3AF),
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                    child: Text(
+                      'Find your next favorite book',
+                      style: TextStyle(
+                        color: subtitleColor,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                   const Gap(20),
-                  Searchtextfiled(
-                    controller: _searchController,
-                    onSearch: (query) {
-                      context.read<SearchBooksCubit>().searchBooks(
-                        query: query,
-                      );
-                    },
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Searchtextfiled(
+                      controller: _searchController,
+                      onSearch: (query) {
+                        context.read<SearchBooksCubit>().searchBooks(
+                          query: query,
+                        );
+                      },
+                    ),
                   ),
                   const Gap(20),
-                  const Text(
-                    'Search results',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontFamily: 'NotoSerif',
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      'Search results',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontFamily: 'NotoSerif',
+                        fontWeight: FontWeight.bold,
+                        color: textColor,
+                      ),
                     ),
                   ),
                   const Gap(20),
                   const Expanded(child: SearchResultListview()),
                 ],
-              ),
+              );
+            },
+          ),
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            title: BlocBuilder<ThemeCubit, ThemeMode>(
+              builder: (context, themeMode) {
+                final isDark = themeMode == ThemeMode.dark;
+                final titleColor = isDark ? Colors.white : Colors.black;
+                return Text(
+                  'Search',
+                  style: TextStyle(
+                    color: titleColor,
+                    fontSize: 28,
+                    fontFamily: 'NotoSerif',
+                    fontWeight: FontWeight.w700,
+                  ),
+                );
+              },
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }
